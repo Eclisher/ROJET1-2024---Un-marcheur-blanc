@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class MarcheurServiceTest {
     private Carte carte;
 
@@ -65,6 +67,23 @@ public class MarcheurServiceTest {
 
         Lieu dernierLieu = marche.getParcours().get(marche.getParcours().size() - 1);
         Assertions.assertEquals("ESTI", dernierLieu.getNom(), "La marche doit se terminer à ESTI");
+    }
+
+
+    @Test
+    public void testAffichageTousLesLieuxDeHEIAESTI() {
+        MarcheurService marcheurService = new MarcheurService();
+        Lieu hei = carte.getLieu("HEI");
+        Lieu esti = carte.getLieu("ESTI");
+        Marche marche = marcheurService.faireMarcherAleatoirement(hei, esti);
+
+        Assertions.assertFalse(marche.getParcours().isEmpty(), "La marche ne doit pas être vide");
+
+        List<Lieu> parcours = marche.getParcours();
+        System.out.println("Parcours de HEI à ESTI:");
+        for (Lieu lieu : parcours) {
+            System.out.println(lieu.getNom());
+        }
     }
 
     private Carte preparerCarte() {
