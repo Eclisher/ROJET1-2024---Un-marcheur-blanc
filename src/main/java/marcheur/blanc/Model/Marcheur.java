@@ -1,29 +1,48 @@
 package marcheur.blanc.Model;
 
-import lombok.Getter;
-
 import java.util.*;
 
-@Getter
 public class Marcheur {
     private Lieu positionActuelle;
     private Marche marcheEnCours;
+    private Set<Lieu> lieuxVisites;
 
     public Marcheur(Lieu positionActuelle) {
         this.positionActuelle = positionActuelle;
         this.marcheEnCours = new Marche(positionActuelle);
+        this.lieuxVisites = new HashSet<>();
+        this.lieuxVisites.add(positionActuelle);
     }
 
-    public void avancerAleatoirement() {
-        Set<Rue> ruesPossibles = positionActuelle.getRues();
-        List<Rue> ruesListe = new ArrayList<>(ruesPossibles);
+    public Lieu getPositionActuelle() {
+        return positionActuelle;
+    }
 
-        if (!ruesListe.isEmpty()) {
-            Random random = new Random();
-            Rue rueChoisie = ruesListe.get(random.nextInt(ruesListe.size()));
-            Lieu prochainLieu = (rueChoisie.getLieu1().equals(positionActuelle)) ? rueChoisie.getLieu2() : rueChoisie.getLieu1();
-            positionActuelle = prochainLieu;
-            marcheEnCours.ajouterLieu(prochainLieu);
+    public Marche getMarcheEnCours() {
+        return marcheEnCours;
+    }
+
+    public void avancerVers(Lieu lieu) {
+        positionActuelle = lieu;
+        marcheEnCours.ajouterLieu(lieu);
+        lieuxVisites.add(lieu);
+    }
+
+    public void avancerAleatoirementVers(Lieu destination) {
+        List<Rue> ruesPossibles = new ArrayList<>(positionActuelle.getRues());
+        Collections.shuffle(ruesPossibles);
+
+        for (Rue rue : ruesPossibles) {
+            Lieu voisin = rue.getLieu1().equals(positionActuelle) ? rue.getLieu2() : rue.getLieu1();
+            if (!lieuxVisites.contains(voisin) || voisin.equals(destination)) {
+                avancerVers(voisin);
+                return;
+            }
+        }
+        if (!ruesPossibles.isEmpty()) {
+            Rue rue = ruesPossibles.get(0);
+            Lieu voisin = rue.getLieu1().equals(positionActuelle) ? rue.getLieu2() : rue.getLieu1();
+            avancerVers(voisin);
         }
     }
 }

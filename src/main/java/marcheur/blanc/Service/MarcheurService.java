@@ -9,7 +9,7 @@ public class MarcheurService {
     public Marche faireMarcherAleatoirement(Lieu lieuDepart, Lieu lieuArrivee) {
         Marcheur marcheur = new Marcheur(lieuDepart);
         while (!marcheur.getPositionActuelle().equals(lieuArrivee)) {
-            marcheur.avancerAleatoirement();
+            marcheur.avancerAleatoirementVers(lieuArrivee);
         }
         return marcheur.getMarcheEnCours();
     }
