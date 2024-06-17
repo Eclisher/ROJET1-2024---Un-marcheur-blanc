@@ -43,6 +43,7 @@ public class MarcheurServiceTest {
         Lieu dernierLieu = marche.getParcours().get(marche.getParcours().size() - 1);
         Assertions.assertEquals("Nexta", dernierLieu.getNom(), "La marche doit se terminer à Nexta");
     }
+
     @Test
     public void testLaMarcheDoitCommencerAHEI() {
         MarcheurService marcheurService = new MarcheurService();
@@ -68,7 +69,6 @@ public class MarcheurServiceTest {
         Lieu dernierLieu = marche.getParcours().get(marche.getParcours().size() - 1);
         Assertions.assertEquals("ESTI", dernierLieu.getNom(), "La marche doit se terminer à ESTI");
     }
-
 
     @Test
     public void testAffichageTousLesLieuxDeHEIAESTI() {
@@ -110,10 +110,10 @@ public class MarcheurServiceTest {
         carte.ajouterRue("Marais", "Sekolintsika", "Rue1");
         carte.ajouterRue("Sekolintsika", "HEI", "Rue2");
         carte.ajouterRue("HEI", "Balancoire", "Rue3");
-        carte.ajouterRue("Balancoire", "ESTI", "Rue4");
-        carte.ajouterRue("HEI", "Boulevard de l'Europe", "Rue5");
-        carte.ajouterRue("Boulevard de l'Europe", "ESTI", "Rue6");
-        carte.ajouterRue("Sekolintsika", "Pullman", "Rue7");
+        carte.ajouterRue("HEI", "Pullman", "Rue4");
+        carte.ajouterRue("Balancoire", "ESTI", "Rue5");
+        carte.ajouterRue("Balancoire", "Boulevard de l'Europe", "Rue6");
+        carte.ajouterRue("Boulevard de l'Europe", "ESTI", "Rue7");
         carte.ajouterRue("Pullman", "Nexta", "Rue8");
 
         return carte;
